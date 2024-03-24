@@ -94,11 +94,19 @@ const sendUserPasswordResetEmail=async(req,res)=>{
             const link=`http://127.0.0.1:3000/api/user/reset/${user._id}/${token}`
             console.log(link)
             //send Email
-            let info=await transporter.sendMail({
-                from:process.env.EMAIL_FROM,
+            let info={
+                from:process.env.EMAIL_USER,
                 to:user.email,
-                subject:"Password Reset",
-                html:`<a href=${link}>Click Here</a> to Reset Your Password`
+                subject:"Password reset",
+                text:`${link}Click Here to Reset Your Password`
+            }
+            await transporter.sendMail(info,(err)=>{
+                if(err){
+                    console.log("it has an error",err)
+                }
+                else{
+                    console.log("email has sent")
+                }
             })
             res.send({"status":"success","message":"password Reset Email Sent ... Please Check Your Email","info":info})
         }else{
