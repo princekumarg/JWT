@@ -100,7 +100,7 @@ const sendUserPasswordResetEmail=async(req,res)=>{
                 subject:"Password reset",
                 text:`${link}Click Here to Reset Your Password`
             }
-            await transporter.sendMail(info,(err)=>{
+            transporter.sendMail(info,(err)=>{
                 if(err){
                     console.log("it has an error",err)
                 }
